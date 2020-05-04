@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- Bootstrapの設定 -->
+<link th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/2.2.4/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+<!-- CSSの読み込み -->
+<link th:href="@{/css/homeCalculator.css}" rel="stylesheet"></link>
+<title>Home Calculation</title>
+</head>
+<body>
+	<div class="page-header">
+		<h1>業務日付計算</h1>
+	</div>
+	<div>
+	<form method="post" action="/homeCalc">
+		<label>計算基準日</label>
+		<input type="text" name="calcDate"><br>
+		<button class="btn btn-primary" type="submit" name="action">計算実行</button>
+		<button class="btn btn-secondary" type="submit" name="regist">計算式登録</button>
+	</form>
+	</div>
+	<div class="containar-fluid">
+		<div class="row">
+			<table class="table table-bordered table-hover table-striped">
+				<tr>
+					<th class="col-md-2">日付ID</th>
+					<th class="col-md-2">計算式名</th>
+					<th class="col-md-2">計算結果</th>
+					<th class="col-md-2">加算日[年/月/日]</th>
+					<th class="col-md-2">日付指定</th>
+					<th class="col-md-2"></th>
+				</tr>
+				<tr th:each="result:${resultList}">
+					<td th:text="${result.formulaId}"></td>
+					<td th:text="${result.formulaName}"></td>
+					<td th:text="${result.formulaAnswer}"></td>
+					<td th:text="${result.addStatus}"></td>
+					<td th:text="${result.designerDay}"></td>
+					<td>
+						<div class="btn btn-vertical">
+						<button class="btn btn-primary" th:href="@{'/userDetail/'}+${user.userId}">編集</button>
+						<button class="btn btn-danger" th:href="@{'/userDetail/'}+${user.userId}">削除</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
