@@ -9,70 +9,72 @@
 	<title>Regist Formula</title>
 </head>
 <body>
-	<div class="col-sm-5">
-		<div class="page-header">
-			<h1>計算式登録画面</h1>
+	<div class="row">
+		<div class="col-sm-5">
+			<div class="page-header">
+				<h1>計算式登録画面</h1>
+				<div class="pull-right">
+				<a th:href="@{/home}">戻る</a>
+				</div>
+			</div>
+			<form method="post" th:action="@{/regist}" th:object="${registFormulaForm}">
+				<table class="table table-bordered table-hover">
+					<tr>
+						<th class="active">日付ID</th>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" th:field="*{formulaId}">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th class="active">計算式名</th>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" th:field="*{formulaName}">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th class="active">加減値[年]</th>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" th:field="*{valueYear}">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th class="active">加減値[月]</th>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" th:field="*{valueMonth}">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th class="active">加減値[日]</th>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" th:field="*{valueDay}">
+							</div>
+						</td>
+					</tr><tr>
+						<th class="active">日付指定</th>
+						<td>
+							<div class="form-group">
+								<input type="text" class="form-control" th:field="*{designerDay}">
+							</div>
+						</td>
+					</tr>
+				</table>
+				<ul>
+					<li th:each="error:${#fields.detailedErrors()}">
+						<span th:text="${error.message}">Error message</span>
+					</li>
+				</ul>
+				<button class="btn btn-primary pull-left" type="submit">新規登録</button>
+			</form>
 		</div>
-		<form method="post" th:action="@{/regist}" th:object="${registFormulaForm}">
-			<table class="table table-bordered table-hover">
-				<tr>
-					<th class="active col-sm-3">日付ID</th>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control" th:field="*{formulaId}">
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th class="active">計算式名</th>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control" th:field="*{formulaName}">
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th class="active">加減値[年]</th>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control" th:field="*{valueYear}">
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th class="active">加減値[月]</th>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control" th:field="*{valueMonth}">
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th class="active">加減値[日]</th>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control" th:field="*{valueDay}">
-						</div>
-					</td>
-				</tr><tr>
-					<th class="active">日付指定</th>
-					<td>
-						<div class="form-group">
-							<input type="text" class="form-control" th:field="*{designerDay}">
-						</div>
-					</td>
-				</tr>
-			</table>
-			<ul>
-				<li th:each="error:${#fields.detailedErrors()}">
-					<span th:text="${error.message}">Error message</span>
-				</li>
-			</ul>
-			<button class="btn btn-primary" type="submit">新規登録</button>
-		</form><br>
-		<form th:action="@{/homeCalc}">
-			<button class="btn btn-secondary" type="submit">戻る</button>
-		</form>
 	</div>
 </body>
 </html>

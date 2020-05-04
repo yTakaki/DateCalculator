@@ -24,6 +24,7 @@ public class RegistFormulaController {
 			return getRegistFormula(form,model);
 		}
 		System.out.println(form);
-		return "redirect:/homeCalc";
+		return "redirect:/home";
 	}
+
 }

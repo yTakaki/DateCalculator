@@ -15,23 +15,25 @@
 		<h1>業務日付計算</h1>
 	</div>
 	<div>
-	<form method="post" action="/homeCalc">
+	<form method="post" action="/home">
 		<label>計算基準日</label>
-		<input type="text" name="calcDate"><br>
-		<button class="btn btn-primary" type="submit" name="action">計算実行</button>
-		<button class="btn btn-secondary" type="submit" name="regist">計算式登録</button>
+		<input type="text" name="calcDate">
+		<button class="btn btn-primary btn-sm pull-left" type="submit">計算実行</button>
+	</form><br>
+	<form th:action="@{/regist}">
+		<button class="btn btn-secondary btn-sm" type="submit">計算式登録</button>
 	</form>
-	</div>
+	</div><br>
 	<div class="containar-fluid">
 		<div class="row">
 			<table class="table table-bordered table-hover table-striped">
 				<tr>
-					<th class="col-md-2">日付ID</th>
-					<th class="col-md-2">計算式名</th>
-					<th class="col-md-2">計算結果</th>
-					<th class="col-md-2">加算日[年/月/日]</th>
-					<th class="col-md-2">日付指定</th>
-					<th class="col-md-2"></th>
+					<th class="col-lg-2">日付ID</th>
+					<th class="col-lg-2">計算式名</th>
+					<th class="col-lg-2">計算結果</th>
+					<th class="col-lg-2">加算日[年/月/日]</th>
+					<th class="col-lg-2">日付指定</th>
+					<th class="col-lg-2"></th>
 				</tr>
 				<tr th:each="result:${resultList}">
 					<td th:text="${result.formulaId}"></td>

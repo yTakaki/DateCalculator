@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class HomeCalcController {
 
-	@GetMapping("/homeCalc")
+	@GetMapping("/home")
 	public String getHomeCalculator(Model model) {
 		return "calc/homeCalculator";
 	}
 
-	@PostMapping("/homeCalc")
+	@PostMapping("/home")
 	public String postHomeCalculator(Model model) {
 		return "calc/homeCalculator";
 	}
