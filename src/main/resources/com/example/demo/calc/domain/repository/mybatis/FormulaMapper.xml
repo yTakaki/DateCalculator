@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper>
+
+	<resultMap type="com.example.demo.calc.domain.model.Formula" id="formula">
+		<id column="formula_id" property="formulaId"></id>
+		<result column="formula_name" property="formulaName"></result>
+		<result column="value_year" property="valueYear"></result>
+		<result column="value_month" property="valueMonth"></result>
+		<result column="value_day" property="valueDay"></result>
+		<result column="designer_day" property="designerDay"></result>
+	</resultMap>
+
+	<insert id="insert" parameterType="com.example.demo.calc.domain.model.Formula">
+	INSERT INTO formula(formula_id,formula_name,value_year,value_month,value_day,designer_day)
+	VALUES(#{formulaId},#{formulaName},#{valueYear},#{valueMonth},#{valueDay},#{designerDay})
+	</insert>
+
+	<select id="selectOne" parameterType="string" resultType="com.example.demo.calc.domain.model.Formula">
+	SELECT formula_id,formula_name,value_year,value_month,value_day,designer_day FROM formula
+	WHERE formula_id=#{formulaId}
+	</select>
+
+	<select id="selectAll" resultMap="formula">
+	SELECT formula_id,formula_name,value_year,value_month,value_day,designer_day FROM formula
+	</select>
+
+	<update id="update" parameterType="com.example.demo.calc.domain.model.Formula">
+	UPDATE formula
+	SET formula_name=#{formulaName},value_year=#{valueYear},value_month=#{valueMonth},
+	value_day=#{valueDay},designer_day=#{designerDay}
+	WHERE formula_id=#{formulaId}
+	</update>
+
+	<delete id="delete" parameterType="string">
+	DELETE FROM formula
+	WHERE formula_id=#{formulaId}
+	</delete>
+
+</mapper>
