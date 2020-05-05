@@ -1,6 +1,7 @@
 package com.example.demo.calc.domain.model;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -18,16 +19,16 @@ public class RegistFormulaForm {
 	@Length(min=1,max=50)
 	private String formulaName;
 
-	@NotBlank
+	@NotNull
 	private int valueYear;
 
-	@NotBlank
+	@NotNull
 	private int valueMonth;
 
-	@NotBlank
+	@NotNull
 	private int valueDay;
 
-	@NotBlank
+	@NotNull
 	@Range(min=0,max=29)
 	private int designerDay;
 

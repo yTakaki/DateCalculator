@@ -23,47 +23,59 @@
 					<tr>
 						<th class="active">日付ID</th>
 						<td>
-							<div class="form-group">
+							<div class="form-group" th:classappend="${#fields.hasErrors('formulaId')}?'has-error'">
 								<input type="text" class="form-control" th:field="*{formulaId}">
+								<span class="text-danger" th:if="${#fields.hasErrors('formulaId')}"
+								th:errors="*{formulaId}">formulaId error</span>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<th class="active">計算式名</th>
 						<td>
-							<div class="form-group">
+							<div class="form-group" th:classappend="${#fields.hasErrors('formulaName')}?'has-error'">
 								<input type="text" class="form-control" th:field="*{formulaName}">
+								<span class="text-danger" th:if="${#fields.hasErrors('formulaName')}"
+								th:errors="*{formulaName}">formulaName error</span>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<th class="active">加減値[年]</th>
 						<td>
-							<div class="form-group">
+							<div class="form-group" th:classappend="${#fields.hasErrors('valueYear')}?'has-error'">
 								<input type="text" class="form-control" th:field="*{valueYear}">
+								<span class="text-danger" th:if="${#fields.hasErrors('valueYear')}"
+								th:errors="*{valueYear}">valueYear error</span>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<th class="active">加減値[月]</th>
 						<td>
-							<div class="form-group">
+							<div class="form-group" th:classappend="${#fields.hasErrors('valueMonth')}?'has-error'">
 								<input type="text" class="form-control" th:field="*{valueMonth}">
+								<span class="text-danger" th:if="${#fields.hasErrors('valueMonth')}"
+								th:errors="*{valueMonth}">valueMonth error</span>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<th class="active">加減値[日]</th>
 						<td>
-							<div class="form-group">
+							<div class="form-group" th:classappend="${#fields.hasErrors('valueDay')}?'has-error'">
 								<input type="text" class="form-control" th:field="*{valueDay}">
+								<span class="text-danger" th:if="${#fields.hasErrors('valueDay')}"
+								th:errors="*{valueDay}">valueDay error</span>
 							</div>
 						</td>
 					</tr><tr>
 						<th class="active">日付指定</th>
 						<td>
-							<div class="form-group">
+							<div class="form-group" th:classappend="${#fields.hasErrors('designerDay')}?'has-error'">
 								<input type="text" class="form-control" th:field="*{designerDay}">
+								<span class="text-danger" th:if="${#fields.hasErrors('designerDay')}"
+								th:errors="*{designerDay}">designerDay error</span>
 							</div>
 						</td>
 					</tr>
