@@ -42,8 +42,8 @@
 					<td th:text="${result.designerDay}"></td>
 					<td>
 						<div class="btn btn-vertical">
-						<button class="btn btn-primary" th:href="@{'/formulaDetail/'}+${result.formulaId}">編集</button>
-						<button class="btn btn-danger" th:href="@{'/formulaDetail/'}+${result.formulaId}">削除</button>
+						<a class="btn btn-primary" th:href="@{'/update/'+${result.formulaId}}">編集</a>
+						<a class="btn btn-danger" th:href="@{'/delete/'+${result.formulaId}}">削除</a>
 						</div>
 					</td>
 				</tr>

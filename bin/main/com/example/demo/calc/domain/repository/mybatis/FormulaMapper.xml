@@ -18,7 +18,7 @@
 	VALUES(#{formulaId},#{formulaName},#{valueYear},#{valueMonth},#{valueDay},#{designerDay})
 	</insert>
 
-	<select id="selectOne" parameterType="string" resultType="com.example.demo.calc.domain.model.Formula">
+	<select id="selectOne" parameterType="string" resultMap="formula">
 	SELECT formula_id,formula_name,value_year,value_month,value_day,designer_day FROM formula
 	WHERE formula_id=#{formulaId}
 	</select>

@@ -33,4 +33,5 @@ public class HomeCalcController {
 		model.addAttribute("resultList",resultList);
 		return "calc/homeCalculator";
 	}
+
 }
