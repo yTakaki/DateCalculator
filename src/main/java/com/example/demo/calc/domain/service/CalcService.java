@@ -37,16 +37,21 @@ public class CalcService {
 			} else if (formula.getDesignerDay()==29) {
 				resultDate = ldate.plusYears(formula.getValueYear());
 				resultDate = resultDate.plusMonths(formula.getValueMonth()+1);
-				resultDate = resultDate.plusDays(1-formula.getValueDay());
+				resultDate = resultDate.plusDays(1-resultDate.getDayOfMonth());
 				resultDate = resultDate.minusDays(1);
 			} else {
 				resultDate = ldate.plusYears(formula.getValueYear());
 				resultDate = resultDate.plusMonths(formula.getValueMonth());
-				resultDate = resultDate.plusDays(formula.getValueDay()-formula.getDesignerDay());
+				if (resultDate.getDayOfMonth()>formula.getDesignerDay()) {
+					resultDate = resultDate.plusDays(resultDate.getDayOfMonth()-formula.getDesignerDay());
+				} else {
+					resultDate = resultDate.plusDays(formula.getDesignerDay()-resultDate.getDayOfMonth());
+				}
 			}
 			calcResult.setResultDate(resultDate);
 			resultList.add(calcResult);
 		}
+		System.out.println("calculation success");
 		return resultList;
 	}
 

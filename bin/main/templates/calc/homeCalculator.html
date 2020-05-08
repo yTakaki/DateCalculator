@@ -27,12 +27,12 @@
 		<div class="row">
 			<table class="table table-bordered table-hover table-striped">
 				<tr>
-					<th class="col-lg-2">日付ID</th>
-					<th class="col-lg-2">計算式名</th>
-					<th class="col-lg-2">計算結果</th>
-					<th class="col-lg-2">加算日[年/月/日]</th>
-					<th class="col-lg-2">日付指定</th>
-					<th class="col-lg-2"></th>
+					<th>日付ID</th>
+					<th>計算式名</th>
+					<th>計算結果</th>
+					<th>加算日[年/月/日]</th>
+					<th>日付指定</th>
+					<th></th>
 				</tr>
 				<tr th:each="result:${resultList}">
 					<td th:text="${result.formulaId}"></td>

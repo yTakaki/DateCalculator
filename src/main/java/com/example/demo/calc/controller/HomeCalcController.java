@@ -2,6 +2,7 @@ package com.example.demo.calc.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.calc.domain.model.CalcResult;
 import com.example.demo.calc.domain.service.CalcService;
 
 @Controller
@@ -27,7 +29,8 @@ public class HomeCalcController {
 	public String postHomeCalculator(@RequestParam("calcDate") String calcDate,Model model) {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		LocalDate ldate = LocalDate.parse(calcDate,fmt);
-		calcService.calculation(ldate);
+		List<CalcResult> resultList = calcService.calculation(ldate);
+		model.addAttribute("resultList",resultList);
 		return "calc/homeCalculator";
 	}
 }
