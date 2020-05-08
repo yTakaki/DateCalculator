@@ -46,11 +46,13 @@ public class RegistFormulaController {
 		boolean result = formulaService.insert(formula);
 		if (result==true) {
 			System.out.println("insert success.");
+			model.addAttribute("result","計算式を1件、追加しました。");
 		} else {
 			System.out.println("insert fault.");
+			model.addAttribute("result","計算式の追加に失敗しました。");
 		}
 
-		return "redirect:/home";
+		return "calc/homeCalculator";
 	}
 
 }
