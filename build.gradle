@@ -34,6 +34,10 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.+'
+    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.+'
+    testCompile 'org.junit.vintage:junit-vintage-engine:4.+'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	compile('org.webjars:jquery:2.2.4')
 	compile('org.webjars:bootstrap:4.4.1')
 }
