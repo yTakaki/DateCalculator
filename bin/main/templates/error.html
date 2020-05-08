@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- Bootstrapの設定 -->
+<link th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}" rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/2.2.4/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+<!-- CSSの読み込み -->
+<link th:href="@{/css/homeCalculator.css}" rel="stylesheet"></link>
+<title>Error Page</title>
+</head>
+<body>
+	<h1 th:text="${status}+''+${error}"></h1>
+	<p th:text="${message}"></p>
+	<p>計算画面に戻ってください。</p>
+	<a class="btn btn-secondary" th:href="@{/home}">戻る</a>
+	</body>
+</html>
