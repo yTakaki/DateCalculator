@@ -17,9 +17,10 @@
 	<div>
 	<form method="post" action="/home">
 		<label>計算基準日</label>
-		<input type="text" name="calcDate">
+		<input type="text" name="calcDate" th:value="${calcDate_value}">
 		<button class="btn btn-primary btn-sm pull-left" type="submit">計算実行</button>
-		<a class="btn btn-secondary btn-sm" th:href="@{/regist}">計算式登録</a>
+		<a class="btn btn-secondary btn-sm" th:href="@{/regist}">計算式登録</a><br>
+		<p>計算基準日は、"YYYY/MM/DD"の形式で入力してください。</p>
 	</form>
 	</div><br>
 	<div class="containar-fluid">
@@ -36,13 +37,13 @@
 				<tr th:each="result:${resultList}">
 					<td th:text="${result.formulaId}"></td>
 					<td th:text="${result.formulaName}"></td>
-					<td th:text="${result.formulaAnswer}"></td>
-					<td th:text="${result.addStatus}"></td>
+					<td th:text="${result.resultDate}"></td>
+					<td th:text="${result.valueSet}"></td>
 					<td th:text="${result.designerDay}"></td>
 					<td>
 						<div class="btn btn-vertical">
-						<button class="btn btn-primary" th:href="@{'/userDetail/'}+${user.userId}">編集</button>
-						<button class="btn btn-danger" th:href="@{'/userDetail/'}+${user.userId}">削除</button>
+						<button class="btn btn-primary" th:href="@{'/formulaDetail/'}+${result.formulaId}">編集</button>
+						<button class="btn btn-danger" th:href="@{'/formulaDetail/'}+${result.formulaId}">削除</button>
 						</div>
 					</td>
 				</tr>
