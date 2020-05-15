@@ -20,11 +20,11 @@ public class FormulaRestControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private RestService restService;
+	private RestService service;
 
 	@Ignore
 	@Test
 	public void 計算式情報一覧をRESTサービスで取得するテスト() throws Exception {
-		fail("まだ定義されていません");
+		fail("未実装");
 	}
 }
