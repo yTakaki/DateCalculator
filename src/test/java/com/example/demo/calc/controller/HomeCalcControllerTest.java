@@ -1,10 +1,9 @@
 package com.example.demo.calc.controller;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,9 +22,9 @@ public class HomeCalcControllerTest {
 		this.mockMvc.perform(get("/home")).andExpect(status().isOk()).andExpect(view().name("calc/homeCalculator"));
 	}
 
-	@Disabled
 	@Test
-	void homeへのPOSTリクエストに対するテスト() throws Exception {
-		fail("未実装");
+	void 計算実行に対する計算結果にformulaIdが反映されるかテスト() throws Exception {
+		this.mockMvc.perform(post("/home").param("calcDate","2020/05/05"))
+		.andExpect(model().attribute("resultList",hasItem(hasProperty("formulaId"))));
 	}
 }
