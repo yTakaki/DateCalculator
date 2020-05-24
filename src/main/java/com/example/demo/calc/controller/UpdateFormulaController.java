@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.calc.domain.model.Formula;
-import com.example.demo.calc.domain.model.GroupOrder;
 import com.example.demo.calc.domain.model.RegistFormulaForm;
 import com.example.demo.calc.domain.service.FormulaService;
 
@@ -42,7 +41,7 @@ public class UpdateFormulaController {
 	}
 
 	@PostMapping("/update")
-	public String postUpdateFormula(@ModelAttribute @Validated(GroupOrder.class) RegistFormulaForm form,
+	public String postUpdateFormula(@ModelAttribute @Validated RegistFormulaForm form,
 			BindingResult bindingResult,Model model) {
 		if (bindingResult.hasErrors()) {
 			return getUpdateFormula(form,model,form.getFormulaId());
