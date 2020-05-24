@@ -43,9 +43,9 @@ public class CalcService {
 				resultDate = ldate.plusYears(formula.getValueYear());
 				resultDate = resultDate.plusMonths(formula.getValueMonth());
 				if (resultDate.getDayOfMonth()>formula.getDesignerDay()) {
-					resultDate = resultDate.plusDays(resultDate.getDayOfMonth()-formula.getDesignerDay());
+					resultDate = resultDate.minusDays(resultDate.getDayOfMonth()-formula.getDesignerDay());
 				} else {
-					resultDate = resultDate.plusDays(formula.getDesignerDay()-resultDate.getDayOfMonth());
+					resultDate = resultDate.minusDays(formula.getDesignerDay()-resultDate.getDayOfMonth());
 				}
 			}
 			calcResult.setResultDate(resultDate);
