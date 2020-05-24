@@ -26,7 +26,7 @@ public class FormulaMapperTest {
 	private NamedParameterJdbcOperations jdbcOperations;
 
 	@Test
-	void テストデータのinsert実行テスト() throws Exception {
+	void insert実行テスト() throws Exception {
 		{
 			// setup
 			Formula f = new Formula();
@@ -52,9 +52,8 @@ public class FormulaMapperTest {
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO formula (formula_id,formula_name,value_year,value_month,value_day,designer_day)"
-			+ " VALUES ('99999','testdata',0,0,0,1)")
-	void テストデータのselectOne実行テスト() throws Exception {
+	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
+	void selectOne実行テスト() throws Exception {
 		{
 			//setup
 			String formulaId = "99999";
@@ -72,7 +71,7 @@ public class FormulaMapperTest {
 
 	@Test
 	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
-	void テストデータのupdate実行テスト() throws Exception {
+	void update実行テスト() throws Exception {
 		{
 			// setup
 			Formula f = new Formula();
@@ -94,7 +93,7 @@ public class FormulaMapperTest {
 
 	@Test
 	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
-	void テストデータのdelete実行テスト() throws Exception {
+	void delete実行テスト() throws Exception {
 		{
 			//execute
 			mapper.delete("99999");
