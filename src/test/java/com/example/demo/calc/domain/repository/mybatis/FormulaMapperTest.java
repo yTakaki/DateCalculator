@@ -3,6 +3,8 @@ package com.example.demo.calc.domain.repository.mybatis;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class FormulaMapperTest {
 	private NamedParameterJdbcOperations jdbcOperations;
 
 	@Test
-	void insert実行テスト() throws Exception {
+	void insertTest() throws Exception {
 		{
 			// setup
 			Formula f = new Formula();
@@ -53,7 +55,7 @@ public class FormulaMapperTest {
 
 	@Test
 	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
-	void selectOne実行テスト() throws Exception {
+	void selectOneTest() throws Exception {
 		{
 			//setup
 			String formulaId = "99999";
@@ -70,8 +72,26 @@ public class FormulaMapperTest {
 	}
 
 	@Test
+	@Sql(statements="DELETE FROM formula")
 	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
-	void update実行テスト() throws Exception {
+	void selectAllTest() throws Exception {
+		{
+			// execute
+			List<Formula> actual = mapper.selectAll();
+			// assertion
+			assertThat(actual.size(),is(1));
+			assertThat(actual.get(0).getFormulaId(),is("99999"));
+			assertThat(actual.get(0).getFormulaName(),is("testdata"));
+			assertThat(actual.get(0).getValueYear(),is(0));
+			assertThat(actual.get(0).getValueMonth(),is(0));
+			assertThat(actual.get(0).getValueDay(),is(0));
+			assertThat(actual.get(0).getDesignerDay(),is(1));
+		}
+	}
+
+	@Test
+	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
+	void updateTest() throws Exception {
 		{
 			// setup
 			Formula f = new Formula();
@@ -93,7 +113,7 @@ public class FormulaMapperTest {
 
 	@Test
 	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
-	void delete実行テスト() throws Exception {
+	void deleteTest() throws Exception {
 		{
 			//execute
 			mapper.delete("99999");
