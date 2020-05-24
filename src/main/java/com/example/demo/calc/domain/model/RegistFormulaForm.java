@@ -11,25 +11,25 @@ import lombok.Data;
 @Data
 public class RegistFormulaForm {
 
-	@NotBlank(groups=ValidGroup1.class)
-	@Length(min=1,max=5,groups=ValidGroup2.class)
+	@NotBlank
+	@Length(max=5)
 	private String formulaId;
 
-	@NotBlank(groups=ValidGroup1.class)
-	@Length(min=1,max=50,groups=ValidGroup2.class)
+	@NotBlank
+	@Length(max=50)
 	private String formulaName;
 
-	@NotNull(groups=ValidGroup1.class)
+	@NotNull
 	private int valueYear;
 
-	@NotNull(groups=ValidGroup1.class)
+	@NotNull
 	private int valueMonth;
 
-	@NotNull(groups=ValidGroup1.class)
+	@NotNull
 	private int valueDay;
 
-	@NotNull(groups=ValidGroup1.class)
-	@Range(min=0,max=29,groups=ValidGroup2.class)
+	@NotNull
+	@Range(min=0,max=29)
 	private int designerDay;
 
 }
