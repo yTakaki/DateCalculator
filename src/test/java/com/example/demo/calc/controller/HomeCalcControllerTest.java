@@ -31,7 +31,9 @@ public class HomeCalcControllerTest {
 
 	@Test
 	void homeへのGETリクエストに対するhomeCalculatorのビュー表示確認のテスト() throws Exception {
-		this.mockMvc.perform(get("/home")).andExpect(status().isOk()).andExpect(view().name("calc/homeCalculator"));
+		this.mockMvc.perform(get("/home"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("calc/homeCalculator"));
 	}
 
 	@Test
@@ -51,4 +53,5 @@ public class HomeCalcControllerTest {
 		this.mockMvc.perform(post("/home").param("calcDate","2020/05/05"))
 		.andExpect(model().attribute("resultList",hasItems(hasProperty("resultDate",is(LocalDate.of(2020,5,6))))));
 	}
+
 }
