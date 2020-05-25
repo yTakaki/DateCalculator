@@ -33,6 +33,7 @@ public class FormulaServiceTest {
 			f.setFormulaId("99999");
 			f.setFormulaName("testdata");
 			f.setValueDay(1);
+			service.delete("99999");
 			service.insert(f);
 			Formula actual = jdbcOperations.queryForObject("sELECT * FROM formula WHERE formula_id = :formula_id",
 					new MapSqlParameterSource("formula_id",f.getFormulaId()),
@@ -47,7 +48,10 @@ public class FormulaServiceTest {
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
+	@Sql(statements = {
+			"DELETE FROM formula",
+			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
+	})
 	void selectOneTest() throws Exception {
 		{
 			//setup
@@ -81,7 +85,10 @@ public class FormulaServiceTest {
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
+	@Sql(statements = {
+			"DELETE FROM formula WHERE formula_id = '99999'",
+			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
+	})
 	void updateTest() throws Exception {
 		{
 			// setup
@@ -103,7 +110,10 @@ public class FormulaServiceTest {
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
+	@Sql(statements = {
+			"DELETE FROM formula WHERE formula_id = '99999'",
+			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
+	})
 	void deleteTest() throws Exception {
 		{
 			//execute

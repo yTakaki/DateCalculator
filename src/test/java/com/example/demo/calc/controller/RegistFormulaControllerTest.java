@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,12 +12,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.calc.domain.service.FormulaService;
+
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class RegistFormulaControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+
+	@Autowired
+	private FormulaService service;
+
+	@BeforeEach
+	void beforeTest() throws Exception {
+		service.delete("99999");
+	}
 
 	@Test
 	void registへのGETリクエストに対するregistFormulaビュー表示確認のテスト() throws Exception {
@@ -26,7 +38,6 @@ public class RegistFormulaControllerTest {
 	}
 
 	@Test
-	@Transactional // for test insert
 	void registへのPOSTリクエストに対するテスト() throws Exception {
 		// execute and assertion
 		this.mockMvc.perform(post("/regist")

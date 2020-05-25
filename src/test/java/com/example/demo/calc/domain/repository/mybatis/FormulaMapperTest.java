@@ -38,6 +38,7 @@ public class FormulaMapperTest {
 			f.setValueMonth(0);
 			f.setValueDay(0);
 			f.setDesignerDay(1);
+			mapper.delete("99999");
 			// execute
 			mapper.insert(f); // testdataのinsertを実行
 			Formula actual = jdbcOperations.queryForObject("SELECT * FROM formula WHERE formula_id = :formula_id",
@@ -54,7 +55,10 @@ public class FormulaMapperTest {
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
+	@Sql(statements = {
+			"DELETE FROM formula WHERE formula_id = '99999'",
+			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
+	})
 	void selectOneTest() throws Exception {
 		{
 			//setup
@@ -72,8 +76,10 @@ public class FormulaMapperTest {
 	}
 
 	@Test
-	@Sql(statements="DELETE FROM formula")
-	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
+	@Sql(statements = {
+			"DELETE FROM formula",
+			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
+	})
 	void selectAllTest() throws Exception {
 		{
 			// execute
@@ -90,7 +96,10 @@ public class FormulaMapperTest {
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
+	@Sql(statements = {
+			"DELETE FROM formula WHERE formula_id = '99999'",
+			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
+	})
 	void updateTest() throws Exception {
 		{
 			// setup
@@ -112,7 +121,10 @@ public class FormulaMapperTest {
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)")
+	@Sql(statements = {
+			"DELETE FROM formula WHERE formula_id = '99999'",
+			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
+	})
 	void deleteTest() throws Exception {
 		{
 			//execute
