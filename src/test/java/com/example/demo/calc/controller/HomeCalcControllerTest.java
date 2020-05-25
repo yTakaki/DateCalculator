@@ -15,12 +15,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.calc.domain.model.CalcResult;
 import com.example.demo.calc.domain.service.CalcService;
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@Transactional
 public class HomeCalcControllerTest {
 
 	@Autowired

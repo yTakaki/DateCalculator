@@ -14,11 +14,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.calc.domain.model.CalcResult;
 import com.example.demo.calc.domain.model.Formula;
 
 @SpringBootTest
+@Transactional
 @AutoConfigureTestDatabase(replace=Replace.NONE)
 public class CalcServiceTest {
 
