@@ -52,4 +52,17 @@ public class FormulaRestControllerTest {
 		assertThat(responseJson,is(expect));
 	}
 
+	@Test
+	void getSelectAllTest() throws Exception {
+		Formula expect = new Formula();
+		expect.setFormulaId("99999");
+		expect.setFormulaName("testdata");
+		expect.setValueDay(1);
+		ObjectMapper mapper = new ObjectMapper();
+		String expectJson = mapper.writeValueAsString(expect);
+		this.mock.perform(get("/formulaList"))
+		.andExpect(status().isOk())
+		.andExpect(content().string(containsString(expectJson)));
+	}
+
 }
