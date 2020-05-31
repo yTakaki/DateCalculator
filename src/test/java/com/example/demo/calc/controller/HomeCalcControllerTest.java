@@ -1,60 +1,67 @@
 package com.example.demo.calc.controller;
 
-import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.calc.domain.model.CalcResult;
 import com.example.demo.calc.domain.service.CalcService;
+import com.example.demo.calc.domain.service.FormulaService;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-@Transactional
+@WebMvcTest(HomeCalcController.class)
 public class HomeCalcControllerTest {
 
 	@Autowired
-	private MockMvc mockMvc;
+	private MockMvc mock;
 
 	@MockBean
 	private CalcService service;
 
+	@MockBean
+	private FormulaService service2;
+
 	@Test
-	void homeへのGETリクエストに対するhomeCalculatorのビュー表示確認のテスト() throws Exception {
-		this.mockMvc.perform(get("/home"))
+	void 計算用ページへのリクエストに対して正常にビューが表示されること() throws Exception {
+		mock.perform(get("/home"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("calc/homeCalculator"));
 	}
 
 	@Test
-	void 計算実行に対する計算結果がmodelに反映されるかテスト() throws Exception {
-		{
-			CalcResult f = new CalcResult();
-			f.setFormulaId("99999");
-			f.setFormulaName("testdata");
-			f.setResultDate(LocalDate.of(2020,5,6));
-			f.setValueSet("0/0/1");
-			f.setDesignerDay(0);
-			List<CalcResult> list = new ArrayList<>();
-			list.add(f);
+	void 計算用ページにて計算基準日を入力して計算実行を押すとCalcServiceが実行されること() throws Exception {
+		mock.perform(post("/home").param("calcDate","2020/05/05"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("calc/homeCalculator"));
 
-			when(service.calculation(any())).thenReturn(list);
-		}
-		this.mockMvc.perform(post("/home").param("calcDate","2020/05/05"))
-		.andExpect(model().attribute("resultList",hasItems(hasProperty("resultDate",is(LocalDate.of(2020,5,6))))));
+		verify(service,times(1)).calculation(any());
 	}
 
+	@Test
+	void 計算用ページにて削除ボタンを押すと削除処理されて同一画面に戻ること() throws Exception {
+		mock.perform(post("/delete/{formulaId}","00001"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("calc/homeCalculator"));
+
+		verify(service2,times(1)).delete("00001");
+	}
+
+	@Test
+	void 計算用ページにて計算基準日がNULLで計算実行されたとき例外情報が画面に返されること() throws Exception {
+		mock.perform(post("/home"))
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("calc/homeCalculator"));
+	}
+
+	@Test
+	void 計算用ページにて計算基準日が不適正な値で計算実行されたとき例外情報が画面に返されること() throws Exception {
+		mock.perform(post("/home").param("calcDate", "2020/5/5"))
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("calc/homeCalculator"));
+	}
 }

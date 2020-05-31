@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.calc.domain.model.CalcResult;
 import com.example.demo.calc.domain.model.Formula;
+import com.example.demo.calc.domain.repository.mybatis.FormulaMapper;
 
 @Service
 public class CalcService {
@@ -16,39 +17,32 @@ public class CalcService {
 	List<CalcResult> calcList = new ArrayList<CalcResult>();
 
 	@Autowired
-	private FormulaService formulaService;
+	private FormulaMapper mapper;
 
 	public List<CalcResult> calculation(LocalDate calcDate) {
 
 		List<CalcResult> resultList = new ArrayList<>();
-		List<Formula> formulaList = formulaService.selectAll();
+		List<Formula> formulaList = mapper.selectAll();
 
 		for (Formula formula:formulaList) {
-			CalcResult calcResult = new CalcResult();
-			calcResult.setFormulaId(formula.getFormulaId());
-			calcResult.setFormulaName(formula.getFormulaName());
-			calcResult.setValueSet(formula.getValueYear()+"/"+formula.getValueMonth()+"/"+formula.getValueDay());
-			calcResult.setDesignerDay(formula.getDesignerDay());
 			LocalDate resultDate;
 			if (formula.getDesignerDay()==0) {
-				resultDate = calcDate.plusYears(formula.getValueYear());
-				resultDate = resultDate.plusMonths(formula.getValueMonth());
-				resultDate = resultDate.plusDays(formula.getValueDay());
+				resultDate = calcDate.plusYears(formula.getValueYear())
+						.plusMonths(formula.getValueMonth()).plusDays(formula.getValueDay());
 			} else if (formula.getDesignerDay()==29) {
-				resultDate = calcDate.plusYears(formula.getValueYear());
-				resultDate = resultDate.plusMonths(formula.getValueMonth()+1);
-				resultDate = resultDate.plusDays(1-resultDate.getDayOfMonth());
-				resultDate = resultDate.minusDays(1);
+				resultDate = calcDate.plusYears(formula.getValueYear())
+						.plusMonths(formula.getValueMonth()+1).plusDays(1-calcDate.getDayOfMonth()).minusDays(1);
 			} else {
-				resultDate = calcDate.plusYears(formula.getValueYear());
-				resultDate = resultDate.plusMonths(formula.getValueMonth());
+				resultDate = calcDate.plusYears(formula.getValueYear()).plusMonths(formula.getValueMonth());
 				if (resultDate.getDayOfMonth()>formula.getDesignerDay()) {
 					resultDate = resultDate.minusDays(resultDate.getDayOfMonth()-formula.getDesignerDay());
 				} else {
 					resultDate = resultDate.minusDays(formula.getDesignerDay()-resultDate.getDayOfMonth());
 				}
 			}
-			calcResult.setResultDate(resultDate);
+			CalcResult calcResult = new CalcResult(formula.getFormulaId(),formula.getFormulaName(),resultDate,
+					formula.getValueYear()+"/"+formula.getValueMonth()+"/"+formula.getValueDay(),
+					formula.getDesignerDay());
 			resultList.add(calcResult);
 		}
 		System.out.println("calculation success");

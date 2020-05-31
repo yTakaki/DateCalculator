@@ -1,18 +1,11 @@
 package com.example.demo.calc.controller;
 
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.calc.domain.model.Formula;
 import com.example.demo.calc.domain.service.FormulaService;
 
 @AutoConfigureMockMvc
@@ -26,6 +19,8 @@ public class UpdateFormulaControllerTest {
 	@Autowired
 	private FormulaService service;
 
+
+	/* // 初期に書いていたテスト（自戒のため残しておく）
 	@BeforeEach
 	void beforeTest() throws Exception {
 		Formula f = new Formula();
@@ -55,4 +50,5 @@ public class UpdateFormulaControllerTest {
 				.param("formulaName","testdata").param("valueDay","2"))
 		.andExpect(model().attribute("result",is("計算式(99999)を1件、更新しました。")));
 	}
+	*/
 }

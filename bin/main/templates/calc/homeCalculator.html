@@ -47,8 +47,10 @@
 					<td th:text="${result.designerDay}"></td>
 					<td>
 						<div class="btn btn-vertical">
-						<a class="btn btn-primary btn-sm" th:href="@{'/update/'+${result.formulaId}}">編集</a>
-						<a class="btn btn-danger btn-sm" th:href="@{'/delete/'+${result.formulaId}}">削除</a>
+						<form method="post" th:action="@{'/delete/'+${result.formulaId}}">
+							<a class="btn btn-primary btn-sm" th:href="@{'/update/'+${result.formulaId}}">編集</a>
+							<button class="btn btn-danger btn-sm" type="submit">削除</button>
+						</form>
 						</div>
 					</td>
 				</tr>

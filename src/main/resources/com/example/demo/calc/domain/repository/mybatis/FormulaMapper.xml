@@ -14,17 +14,17 @@
 	</resultMap>
 
 	<insert id="insert" parameterType="com.example.demo.calc.domain.model.Formula">
-	INSERT INTO formula(formula_id,formula_name,value_year,value_month,value_day,designer_day)
+	INSERT INTO formula
 	VALUES(#{formulaId},#{formulaName},#{valueYear},#{valueMonth},#{valueDay},#{designerDay})
 	</insert>
 
 	<select id="selectOne" parameterType="string" resultMap="formula">
-	SELECT formula_id,formula_name,value_year,value_month,value_day,designer_day FROM formula
+	SELECT * FROM formula
 	WHERE formula_id=#{formulaId}
 	</select>
 
 	<select id="selectAll" resultMap="formula">
-	SELECT formula_id,formula_name,value_year,value_month,value_day,designer_day FROM formula
+	SELECT * FROM formula ORDER BY formula_id ASC
 	</select>
 
 	<update id="update" parameterType="com.example.demo.calc.domain.model.Formula">

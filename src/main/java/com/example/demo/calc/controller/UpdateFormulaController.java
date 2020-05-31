@@ -69,17 +69,5 @@ public class UpdateFormulaController {
 		return "calc/homeCalculator";
 	}
 
-	@GetMapping("/delete/{id}")
-	public String getDeleteFormula(Model model,@PathVariable("id")String formulaId) {
-		System.out.println("formulaId="+formulaId);
-		boolean result = formulaService.delete(formulaId);
-		if (result) {
-			System.out.println("delete success.");
-			model.addAttribute("result","計算式("+formulaId+")を1件、削除しました。");
-		} else {
-			System.out.println("delete failure.");
-			model.addAttribute("result","計算式("+formulaId+")の削除に失敗しました。");
-		}
-		return "calc/homeCalculator";
-	}
+
 }
