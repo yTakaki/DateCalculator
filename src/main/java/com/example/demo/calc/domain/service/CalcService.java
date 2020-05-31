@@ -18,7 +18,7 @@ public class CalcService {
 	@Autowired
 	private FormulaService formulaService;
 
-	public List<CalcResult> calculation(LocalDate ldate) {
+	public List<CalcResult> calculation(LocalDate calcDate) {
 
 		List<CalcResult> resultList = new ArrayList<>();
 		List<Formula> formulaList = formulaService.selectAll();
@@ -31,16 +31,16 @@ public class CalcService {
 			calcResult.setDesignerDay(formula.getDesignerDay());
 			LocalDate resultDate;
 			if (formula.getDesignerDay()==0) {
-				resultDate = ldate.plusYears(formula.getValueYear());
+				resultDate = calcDate.plusYears(formula.getValueYear());
 				resultDate = resultDate.plusMonths(formula.getValueMonth());
 				resultDate = resultDate.plusDays(formula.getValueDay());
 			} else if (formula.getDesignerDay()==29) {
-				resultDate = ldate.plusYears(formula.getValueYear());
+				resultDate = calcDate.plusYears(formula.getValueYear());
 				resultDate = resultDate.plusMonths(formula.getValueMonth()+1);
 				resultDate = resultDate.plusDays(1-resultDate.getDayOfMonth());
 				resultDate = resultDate.minusDays(1);
 			} else {
-				resultDate = ldate.plusYears(formula.getValueYear());
+				resultDate = calcDate.plusYears(formula.getValueYear());
 				resultDate = resultDate.plusMonths(formula.getValueMonth());
 				if (resultDate.getDayOfMonth()>formula.getDesignerDay()) {
 					resultDate = resultDate.minusDays(resultDate.getDayOfMonth()-formula.getDesignerDay());

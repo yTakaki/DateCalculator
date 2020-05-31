@@ -1,6 +1,7 @@
 package com.example.demo.calc.controller;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -50,7 +51,7 @@ public class HomeCalcControllerTest {
 			List<CalcResult> list = new ArrayList<>();
 			list.add(f);
 
-			when(service.calculation(LocalDate.of(2020,5,5))).thenReturn(list);
+			when(service.calculation(any())).thenReturn(list);
 		}
 		this.mockMvc.perform(post("/home").param("calcDate","2020/05/05"))
 		.andExpect(model().attribute("resultList",hasItems(hasProperty("resultDate",is(LocalDate.of(2020,5,6))))));

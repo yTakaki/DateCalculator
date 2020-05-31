@@ -15,12 +15,15 @@
 		<h1>業務日付計算</h1>
 	</div>
 	<div>
-	<form method="post" action="/home">
+	<form method="post" th:action="@{/home}" th:object="${calcDateForm}">
 		<label>計算基準日</label>
-		<input type="text" name="calcDate" th:value="${calcDate_value}">
+		<input type="text" th:field="*{calcDate}" placeholder="YYYY/MM/DD">
+		<p>計算基準日は、"YYYY/MM/DD"の形式で入力してください。</p>
+		<p class="text-danger" th:if="${#fields.hasErrors('calcDate')}"
+		th:errors="*{calcDate}"></p>
 		<button class="btn btn-primary btn-sm pull-left" type="submit">計算実行</button>
 		<a class="btn btn-secondary btn-sm" th:href="@{/regist}">計算式登録</a><br>
-		<p>計算基準日は、"YYYY/MM/DD"の形式で入力してください。</p>
+
 	</form>
 	</div>
 	<label class="text-info" th:text="${result}">結果表示：</label>
