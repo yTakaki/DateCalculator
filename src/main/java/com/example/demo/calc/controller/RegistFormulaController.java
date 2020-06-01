@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.calc.domain.model.CalcDateForm;
 import com.example.demo.calc.domain.model.Formula;
 import com.example.demo.calc.domain.model.RegistFormulaForm;
 import com.example.demo.calc.domain.service.FormulaService;
@@ -33,24 +34,19 @@ public class RegistFormulaController {
 		}
 		System.out.println(form);
 
-		Formula formula = new Formula();
-
-		formula.setFormulaId(form.getFormulaId());
-		formula.setFormulaName(form.getFormulaName());
-		formula.setValueYear(form.getValueYear());
-		formula.setValueMonth(form.getValueMonth());
-		formula.setValueDay(form.getValueDay());
-		formula.setDesignerDay(form.getDesignerDay());
+		Formula formula = new Formula(form.getFormulaId(),form.getFormulaName(),
+				form.getValueYear(),form.getValueMonth(),form.getValueDay(),form.getDesignerDay());
 
 		boolean result = formulaService.insert(formula);
 		if (result==true) {
 			System.out.println("insert success.");
 			model.addAttribute("result","計算式を1件、追加しました。");
 		} else {
-			System.out.println("insert fault.");
+			System.out.println("insert failure.");
 			model.addAttribute("result","計算式の追加に失敗しました。");
 		}
 
+		model.addAttribute("calcDateForm",new CalcDateForm());
 		return "calc/homeCalculator";
 	}
 
