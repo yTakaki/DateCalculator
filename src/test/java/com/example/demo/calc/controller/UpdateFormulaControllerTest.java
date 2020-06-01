@@ -29,7 +29,7 @@ public class UpdateFormulaControllerTest {
 
 	@Test
 	void 更新ページへのリクエストに対して正常な画面を返すこと() throws Exception {
-		when(service.selectOne(anyString())).thenReturn(new Formula()); // to avoid NullPointerException for junit test.
+		when(service.selectOne(anyString())).thenReturn(new Formula("00001","testdata",0,0,1,0)); // to avoid NullPointerException for junit test.
 		mock.perform(get("/update/{formulaId}","00001"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("calc/updateFormula"));
@@ -49,7 +49,7 @@ public class UpdateFormulaControllerTest {
 
 	@Test
 	void 更新ページで計算式名にNullで更新処理をすると例外情報が画面に返されること() throws Exception {
-		when(service.selectOne(anyString())).thenReturn(new Formula()); // to avoid NullPointerException for junit test.
+		when(service.selectOne(anyString())).thenReturn(new Formula("00001","testdata",0,0,1,0)); // to avoid NullPointerException for junit test.
 		mock.perform(post("/update").param("formulaId", "00001")
 				.param("valueYear","0").param("valueMonth","0").param("valueDay","1").param("designerDay","0"))
 		.andExpect(status().isOk())
@@ -59,7 +59,7 @@ public class UpdateFormulaControllerTest {
 
 	@Test
 	void 更新ページで計算式名に空文字で更新処理をすると例外情報が画面に返されること() throws Exception {
-		when(service.selectOne(anyString())).thenReturn(new Formula()); // to avoid NullPointerException for junit test.
+		when(service.selectOne(anyString())).thenReturn(new Formula("00001","testdata",0,0,1,0)); // to avoid NullPointerException for junit test.
 		mock.perform(post("/update").param("formulaId", "00001").param("formulaName","")
 				.param("valueYear","0").param("valueMonth","0").param("valueDay","1").param("designerDay","0"))
 		.andExpect(status().isOk())
@@ -69,7 +69,7 @@ public class UpdateFormulaControllerTest {
 
 	@Test
 	void 更新ページで計算式名に空白で更新処理をすると例外情報が画面に返されること() throws Exception {
-		when(service.selectOne(anyString())).thenReturn(new Formula()); // to avoid NullPointerException for junit test.
+		when(service.selectOne(anyString())).thenReturn(new Formula("00001","testdata",0,0,1,0)); // to avoid NullPointerException for junit test.
 		mock.perform(post("/update").param("formulaId", "00001").param("formulaName"," ")
 				.param("valueYear","0").param("valueMonth","0").param("valueDay","1").param("designerDay","0"))
 		.andExpect(status().isOk())

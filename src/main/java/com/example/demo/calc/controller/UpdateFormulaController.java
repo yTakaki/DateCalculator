@@ -49,14 +49,8 @@ public class UpdateFormulaController {
 		}
 		System.out.println(form);
 
-		Formula formula = new Formula();
-
-		formula.setFormulaId(form.getFormulaId());
-		formula.setFormulaName(form.getFormulaName());
-		formula.setValueYear(form.getValueYear());
-		formula.setValueMonth(form.getValueMonth());
-		formula.setValueDay(form.getValueDay());
-		formula.setDesignerDay(form.getDesignerDay());
+		Formula formula = new Formula(form.getFormulaId(),form.getFormulaName()
+				,form.getValueYear(),form.getValueMonth(),form.getValueDay(),form.getDesignerDay());
 
 		boolean result = formulaService.update(formula);
 		if (result==true) {
