@@ -7,8 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,8 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.example.demo.calc.domain.model.Formula;
 import com.example.demo.calc.domain.service.FormulaService;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = UpdateFormulaController.class)
 @TestPropertySource(locations = "classpath:test.properties")
 public class UpdateFormulaControllerTest {
 
@@ -77,35 +75,35 @@ public class UpdateFormulaControllerTest {
 		.andExpect(view().name("calc/updateFormula"));
 	}
 
-	/* // 初期に書いていたテスト（自戒のため残しておく）
-	@BeforeEach
-	void beforeTest() throws Exception {
-		Formula f = new Formula();
-		f.setFormulaId("99999");
-		f.setFormulaName("testdata");
-		f.setValueDay(1);
-		service.delete("99999");
-		service.insert(f);
-	}
-
 	@Test
-	void modelとviewのTest() throws Exception {
-		this.mock.perform(get("/update/99999"))
+	void 更新ページで計算式名が51文字で更新処理をすると例外情報が画面に返されること() throws Exception {
+		when(service.selectOne(anyString())).thenReturn(new Formula("00001","testdata",0,0,1,0)); // to avoid NullPointerException for junit test.
+		mock.perform(post("/update").param("formulaId", "00001")
+				.param("formulaName","123456789012345678901234567890123456789012345678901")
+				.param("valueYear","0").param("valueMonth","0").param("valueDay","1").param("designerDay","0"))
 		.andExpect(status().isOk())
-		.andExpect(model().attribute("registFormulaForm", hasProperty("formulaId",is("99999"))))
-		.andExpect(model().attribute("registFormulaForm", hasProperty("formulaName",is("testdata"))))
-		.andExpect(model().attribute("registFormulaForm", hasProperty("valueYear",is(0))))
-		.andExpect(model().attribute("registFormulaForm", hasProperty("valueMonth",is(0))))
-		.andExpect(model().attribute("registFormulaForm", hasProperty("valueDay",is(1))))
-		.andExpect(model().attribute("registFormulaForm", hasProperty("designerDay",is(0))))
+		.andExpect(model().hasErrors())
 		.andExpect(view().name("calc/updateFormula"));
 	}
 
 	@Test
-	void postUpdateTest() throws Exception {
-		this.mock.perform(post("/update").param("formulaId","99999")
-				.param("formulaName","testdata").param("valueDay","2"))
-		.andExpect(model().attribute("result",is("計算式(99999)を1件、更新しました。")));
+	void 更新ページで指定日を負の値で更新処理をすると例外情報が画面に返されること() throws Exception {
+		when(service.selectOne(anyString())).thenReturn(new Formula("00001","testdata",0,0,1,0)); // to avoid NullPointerException for junit test.
+		mock.perform(post("/update").param("formulaId", "00001").param("formulaName","testdata")
+				.param("valueYear","0").param("valueMonth","0").param("valueDay","1").param("designerDay","-1"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("calc/updateFormula"));
 	}
-	*/
+
+	@Test
+	void 更新ページで指定日を30で更新処理をすると例外情報が画面に返されること() throws Exception {
+		when(service.selectOne(anyString())).thenReturn(new Formula("00001","testdata",0,0,1,0)); // to avoid NullPointerException for junit test.
+		mock.perform(post("/update").param("formulaId", "00001").param("formulaName","testdata")
+				.param("valueYear","0").param("valueMonth","0").param("valueDay","1").param("designerDay","30"))
+		.andExpect(status().isOk())
+		.andExpect(model().hasErrors())
+		.andExpect(view().name("calc/updateFormula"));
+	}
+
 }
