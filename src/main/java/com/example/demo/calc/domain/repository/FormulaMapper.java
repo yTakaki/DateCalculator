@@ -1,4 +1,4 @@
-package com.example.demo.calc.domain.repository.mybatis;
+package com.example.demo.calc.domain.repository;
 
 import java.util.List;
 

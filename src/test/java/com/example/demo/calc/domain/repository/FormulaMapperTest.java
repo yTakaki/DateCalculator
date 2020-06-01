@@ -1,4 +1,4 @@
-package com.example.demo.calc.domain.repository.mybatis;
+package com.example.demo.calc.domain.repository;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.example.demo.calc.domain.model.Formula;
+import com.example.demo.calc.domain.repository.FormulaMapper;
 
 @MybatisTest
 @AutoConfigureTestDatabase(replace = Replace.NONE) // ←デフォルトの組込DBではなく本番と同様のMySQLでの稼働テストにするためのConfigure

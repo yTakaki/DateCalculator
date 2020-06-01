@@ -1,11 +1,26 @@
 package com.example.demo.calc.domain.service;
+
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.demo.calc.domain.model.Formula;
+import com.example.demo.calc.domain.repository.FormulaMapper;
 
-public interface RestService {
+@Transactional
+@Service
+public class RestService {
 
-	public Formula selectOne(String formulaId);
+	@Autowired
+	FormulaMapper formulaMapper;
 
-	public List<Formula> selectAll();
+	public Formula selectOne(String formulaId) {
+		return formulaMapper.selectOne(formulaId);
+	}
+
+	public List<Formula> selectAll() {
+		return formulaMapper.selectAll();
+	}
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.calc.domain.model.CalcResult;
 import com.example.demo.calc.domain.model.Formula;
-import com.example.demo.calc.domain.repository.mybatis.FormulaMapper;
+import com.example.demo.calc.domain.repository.FormulaMapper;
 
 @Service
 public class CalcService {

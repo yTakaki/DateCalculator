@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.calc.domain.model.CalcDateForm;
 import com.example.demo.calc.domain.model.Formula;
 import com.example.demo.calc.domain.model.RegistFormulaForm;
 import com.example.demo.calc.domain.service.FormulaService;
@@ -66,6 +67,7 @@ public class UpdateFormulaController {
 			model.addAttribute("result","計算式("+form.getFormulaId()+")の更新に失敗しました。");
 		}
 
+		model.addAttribute("calcDateForm",new CalcDateForm());
 		return "calc/homeCalculator";
 	}
 
