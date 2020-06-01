@@ -1,123 +1,75 @@
 package com.example.demo.calc.domain.service;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.demo.calc.domain.model.Formula;
+import com.example.demo.calc.domain.repository.FormulaMapper;
 
-@SpringBootTest
-@Transactional
+@SpringJUnitConfig(classes = FormulaServiceTest.Config.class)
 public class FormulaServiceTest {
 
+	@ComponentScan({
+		"com.example.demo.calc.domain.service",
+		"com.example.demo.calc.domain.repository"
+	})
+	static class Config {
+	}
 	@Autowired
-	private FormulaService service;
+	private FormulaService sut = new FormulaService();
 
-	@Autowired
-	private NamedParameterJdbcOperations jdbcOperations;
+	@MockBean
+	private FormulaMapper mapper;
 
 	@Test
-	void insertTest() throws Exception {
-		{
-			Formula f = new Formula();
-			f.setFormulaId("99999");
-			f.setFormulaName("testdata");
-			f.setValueDay(1);
-			service.delete("99999");
-			service.insert(f);
-			Formula actual = jdbcOperations.queryForObject("sELECT * FROM formula WHERE formula_id = :formula_id",
-					new MapSqlParameterSource("formula_id",f.getFormulaId()),
-					new BeanPropertyRowMapper<>(Formula.class));
-			assertThat(actual.getFormulaId(),is("99999"));
-			assertThat(actual.getFormulaName(),is("testdata"));
-			assertThat(actual.getValueYear(),is(0));
-			assertThat(actual.getValueMonth(),is(0));
-			assertThat(actual.getValueDay(),is(1));
-			assertThat(actual.getDesignerDay(),is(0));
-		}
+	void insertメソッドが実行されること() throws Exception {
+		when(mapper.insert(any())).thenReturn(true);
+		sut.insert(any());
+
+		verify(mapper,times(1)).insert(any());
 	}
 
 	@Test
-	@Sql(statements = {
-			"DELETE FROM formula",
-			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
-	})
-	void selectOneTest() throws Exception {
-		{
-			//setup
-			String formulaId = "99999";
-			// execute
-			Formula actual = service.selectOne(formulaId);
-			// assertion
-			assertThat(actual.getFormulaId(),is("99999"));
-			assertThat(actual.getFormulaName(),is("testdata"));
-			assertThat(actual.getValueYear(),is(0));
-			assertThat(actual.getValueMonth(),is(0));
-			assertThat(actual.getValueDay(),is(0));
-			assertThat(actual.getDesignerDay(),is(1));
-		}
+	void selectOneメソッドが実行されること() throws Exception {
+		when(mapper.selectOne("test")).thenReturn(any());
+		sut.selectOne("test");
+
+		verify(mapper,times(1)).selectOne(anyString());
 	}
 
 	@Test
-	@Sql(statements= {
-			"DELETE FROM formula",
-			"INSERT INTO formula VALUES ('99999','testdata',0,0,1,0)"
-	})
-	void selectAllTest() throws Exception {
-		List<Formula> actual = service.selectAll();
-		assertThat(actual.size(),is(1));
-		assertThat(actual.get(0).getFormulaId(),is("99999"));
-		assertThat(actual.get(0).getFormulaName(),is("testdata"));
-		assertThat(actual.get(0).getValueYear(),is(0));
-		assertThat(actual.get(0).getValueMonth(),is(0));
-		assertThat(actual.get(0).getValueDay(),is(1));
-		assertThat(actual.get(0).getDesignerDay(),is(0));
+	void selectAllメソッドが実行されること() throws Exception {
+		Formula f = new Formula("99999","testdata",0,0,1,0);
+		List<Formula> expect = new ArrayList<>();
+		expect.add(f);
+		when(mapper.selectAll()).thenReturn(expect);
+		sut.selectAll();
+
+		verify(mapper,times(1)).selectAll();
 	}
 
 	@Test
-	@Sql(statements = {
-			"DELETE FROM formula WHERE formula_id = '99999'",
-			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
-	})
-	void updateTest() throws Exception {
-		{
-			// setup
-			Formula f = new Formula();
-			f.setFormulaId("99999");
-			f.setFormulaName("testdata");
-			f.setValueYear(0);
-			f.setValueMonth(0);
-			f.setValueDay(1); // ←updateによる変更テスト対象
-			f.setDesignerDay(1);
-			// execute
-			service.update(f);
-			Formula actual = jdbcOperations.queryForObject("SELECT * FROM formula WHERE formula_id = :formula_id",
-					new MapSqlParameterSource("formula_id",f.getFormulaId()),
-                    new BeanPropertyRowMapper<>(Formula.class));
-			// assertion
-			assertThat(actual.getValueDay(),is(1));
-		}
+	void updateメソッドが実行されること() throws Exception {
+		when(mapper.update(any())).thenReturn(true);
+		sut.update(any());
+
+		verify(mapper,times(1)).update(any());
 	}
 
 	@Test
-	@Sql(statements = {
-			"DELETE FROM formula WHERE formula_id = '99999'",
-			"INSERT INTO formula VALUES ('99999','testdata',0,0,0,1)"
-	})
-	void deleteTest() throws Exception {
-		{
-			//execute
-			service.delete("99999");
-		}
+	void deleteメソッドが実行されること() throws Exception {
+		when(mapper.delete(anyString())).thenReturn(true);
+		sut.delete(anyString());
+
+		verify(mapper,times(1)).delete(anyString());
 	}
 }
