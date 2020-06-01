@@ -25,7 +25,7 @@ public class FormulaServiceTest {
 	static class Config {
 	}
 	@Autowired
-	private FormulaService sut = new FormulaService();
+	private FormulaService sut;
 
 	@MockBean
 	private FormulaMapper mapper;
