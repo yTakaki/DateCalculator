@@ -2,121 +2,87 @@ package com.example.demo.calc.domain.service;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.demo.calc.domain.model.CalcResult;
 import com.example.demo.calc.domain.model.Formula;
+import com.example.demo.calc.domain.repository.FormulaMapper;
 
-@SpringBootTest
-@Transactional
-@AutoConfigureTestDatabase(replace=Replace.NONE)
+@SpringJUnitConfig(classes = CalcServiceTest.Config.class)
 public class CalcServiceTest {
 
-	@Autowired
-	private CalcService service;
-
-	@MockBean
-	private FormulaService formulaService;
-
-	@Test
-	void calculation日加算Test() throws Exception {
-		Formula formula = new Formula();
-		{
-			formula.setFormulaId("99999");
-			formula.setFormulaName("testdata");
-			formula.setValueDay(1);
-		}
-		List<Formula> testFormula = new ArrayList<>();
-		{
-			testFormula.add(0,formula);
-		}
-		when(formulaService.selectAll()).thenReturn(testFormula);
-		List<CalcResult> actual = service.calculation(LocalDate.of(2020, 5, 5));
-		assertThat(actual.get(0).getFormulaId(),is("99999"));
-		assertThat(actual.get(0).getResultDate(),is(LocalDate.of(2020, 5, 6)));
+	@ComponentScan({
+		"com.example.demo.calc.domain.service",
+		"com.example.demo.calc.domain.repository"
+	})
+	static class Config {
 	}
 
-	@Test
-	void calculation月加算Test() throws Exception {
-		Formula formula = new Formula();
-		{
-			formula.setFormulaId("99999");
-			formula.setFormulaName("testdata");
-			formula.setValueMonth(1);
+	public static class 例外処理 {
+
+		@Autowired
+		private CalcService sut;
+
+		@Test
+		void 計算基準日がNullのときNullPointerExceptionを返すこと() throws Exception {
+			assertThrows(NullPointerException.class,() -> sut.calculation(null));
 		}
-		List<Formula> testFormula = new ArrayList<>();
-		{
-			testFormula.add(0,formula);
+
+		@Test
+		void 計算基準日が不適切な日付のときDateTimeExceptionを返すこと() throws Exception {
+			assertThrows(DateTimeException.class,() -> sut.calculation(LocalDate.of(2020, 9, 31)));
 		}
-		when(formulaService.selectAll()).thenReturn(testFormula);
-		List<CalcResult> actual = service.calculation(LocalDate.of(2020, 5, 5));
-		assertThat(actual.get(0).getFormulaId(),is("99999"));
-		assertThat(actual.get(0).getResultDate(),is(LocalDate.of(2020, 6, 5)));
+
 	}
 
-	@Test
-	void calculation年加算Test() throws Exception {
-		Formula formula = new Formula();
-		{
-			formula.setFormulaId("99999");
-			formula.setFormulaName("testdata");
-			formula.setValueYear(1);
-		}
-		List<Formula> testFormula = new ArrayList<>();
-		{
-			testFormula.add(0,formula);
-		}
-		when(formulaService.selectAll()).thenReturn(testFormula);
-		List<CalcResult> actual = service.calculation(LocalDate.of(2020, 5, 5));
-		assertThat(actual.get(0).getFormulaId(),is("99999"));
-		assertThat(actual.get(0).getResultDate(),is(LocalDate.of(2021, 5, 5)));
-	}
+	public static class 日付計算 {
 
-	@Test
-	void calculation日付指定Test() throws Exception {
-		Formula formula = new Formula();
-		{
-			formula.setFormulaId("99999");
-			formula.setFormulaName("testdata");
-			formula.setDesignerDay(1);
-		}
-		List<Formula> testFormula = new ArrayList<>();
-		{
-			testFormula.add(0,formula);
-		}
-		when(formulaService.selectAll()).thenReturn(testFormula);
-		List<CalcResult> actual = service.calculation(LocalDate.of(2020, 5, 5));
-		assertThat(actual.get(0).getFormulaId(),is("99999"));
-		assertThat(actual.get(0).getResultDate(),is(LocalDate.of(2020, 5, 1)));
-	}
+		@Autowired
+		private CalcService sut;
 
-	@Test
-	void calculation末日指定Test() throws Exception {
-		Formula formula = new Formula();
-		{
-			formula.setFormulaId("99999");
-			formula.setFormulaName("testdata");
-			formula.setDesignerDay(29);
+		private FormulaMapper mapper = mock(FormulaMapper.class);
+
+		@ParameterizedTest
+		@CsvSource(value = {
+				"2018-12-01, 0, 0, 0, 0, 2018-12-01", // すべて未指定(指定日なし）
+				"2018-12-01, 0, 0, 0, 20, 2018-12-20", // 日付指定(日付<指定日)
+		})
+		void test(LocalDate calcDate,int valueYear,int valueMonth,int valueDay,
+				int designerDay,LocalDate expect) throws Exception {
+			Formula f = new Formula("99999","test",valueYear,valueMonth,valueDay,designerDay);
+			when(mapper.selectAll()).thenReturn(List.of(f));
+			List<CalcResult> result = sut.calculation(calcDate);
+			LocalDate actual = result.get(0).getResultDate();
+			assertThat(actual,is(expect));
 		}
-		List<Formula> testFormula = new ArrayList<>();
-		{
-			testFormula.add(0,formula);
-		}
-		when(formulaService.selectAll()).thenReturn(testFormula);
-		List<CalcResult> actual = service.calculation(LocalDate.of(2020, 5, 5));
-		assertThat(actual.get(0).getFormulaId(),is("99999"));
-		assertThat(actual.get(0).getResultDate(),is(LocalDate.of(2020, 5, 31)));
 	}
 }
+
+/*
+
+				"2018-12-31, 0, 0, 0, 20, 2018-12-20", // 日付指定(日付>指定日)
+				"2018-12-01, 0, 0, 0, 29, 2018-12-31", // 末日指定(加算日なし)
+				"2018-12-01, 0, 0, -1, 29, 2018-12-31", // 末日指定(加算日あり)
+				"2018-12-01, 0, 0, 1, 0, 2018-12-02", // 翌日
+				"2018-12-01, 0, 0, -1, 0, 2018-11-30", // 前日
+				"2018-11-01, 0, 1, 0, 0, 2018-12-01", // 翌月
+				"2018-12-01, 0, -1, 0, 0, 2018-11-01", // 前月
+				"2018-12-01, 1, 0, 0, 0, 2019-12-01", // 翌年
+				"2018-12-01, -1, 0, 0, 0, 2017-12-01", // 前年
+				"2018-12-01, 1, 1, 1, 1, 2020-01-01", // すべて指定(指定日あり)
+				"2018-10-31, 0, 1, 0, 0, 2018-11-30", // 月の加算で日数の切り捨て
+				"2018-12-02, 0, 13, 0, 0, 2020-01-02", // 年月またぎ
+				"2018-12-02, 0, 0, 365, 0, 2019-12-02", // 年月またぎ
+ */

@@ -12,7 +12,7 @@ import lombok.Data;
 public class CalcDateForm {
 
 	@NotNull
-	@DateTimeFormat(pattern="uuuu/MM/dd")
+	@DateTimeFormat(pattern="uuuu-MM-dd")
 	private LocalDate calcDate;
 
 }

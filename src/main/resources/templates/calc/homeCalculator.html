@@ -17,8 +17,8 @@
 	<div>
 	<form method="post" th:action="@{/home}" th:object="${calcDateForm}">
 		<label>計算基準日</label>
-		<input type="text" th:field="*{calcDate}" placeholder="YYYY/MM/DD">
-		<p>計算基準日は、"YYYY/MM/DD"の形式で入力してください。</p>
+		<input type="text" th:field="*{calcDate}" placeholder="YYYY-MM-DD">
+		<p>計算基準日は、"YYYY-MM-DD"の形式で入力してください。</p>
 		<p class="text-danger" th:if="${#fields.hasErrors('calcDate')}"
 		th:errors="*{calcDate}"></p>
 		<button class="btn btn-primary btn-sm pull-left" type="submit">計算実行</button>
@@ -44,7 +44,8 @@
 					<td th:text="${result.formulaName}"></td>
 					<td th:text="${result.resultDate}"></td>
 					<td th:text="${result.valueSet}"></td>
-					<td th:text="${result.designerDay}"></td>
+					<td th:text="(${result.designerDay}==0?'指定なし':
+					(${result.designerDay}==29?'末日指定':${result.designerDay}))"></td>
 					<td>
 						<div class="btn btn-vertical">
 						<form method="post" th:action="@{'/delete/'+${result.formulaId}}">

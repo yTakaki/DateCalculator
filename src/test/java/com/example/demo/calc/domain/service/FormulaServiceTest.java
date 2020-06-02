@@ -3,7 +3,6 @@ package com.example.demo.calc.domain.service;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -49,9 +48,7 @@ public class FormulaServiceTest {
 	@Test
 	void selectAllメソッドが実行されること() throws Exception {
 		Formula f = new Formula("99999","testdata",0,0,1,0);
-		List<Formula> expect = new ArrayList<>();
-		expect.add(f);
-		when(mapper.selectAll()).thenReturn(expect);
+		when(mapper.selectAll()).thenReturn(List.of(f));
 		sut.selectAll();
 
 		verify(mapper,times(1)).selectAll();

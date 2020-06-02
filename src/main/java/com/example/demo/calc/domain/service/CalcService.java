@@ -31,13 +31,14 @@ public class CalcService {
 						.plusMonths(formula.getValueMonth()).plusDays(formula.getValueDay());
 			} else if (formula.getDesignerDay()==29) {
 				resultDate = calcDate.plusYears(formula.getValueYear())
-						.plusMonths(formula.getValueMonth()+1).plusDays(1-calcDate.getDayOfMonth()).minusDays(1);
+						.plusMonths(formula.getValueMonth()+1);
+				resultDate = resultDate.plusDays(1-resultDate.getDayOfMonth()).minusDays(1);
 			} else {
 				resultDate = calcDate.plusYears(formula.getValueYear()).plusMonths(formula.getValueMonth());
 				if (resultDate.getDayOfMonth()>formula.getDesignerDay()) {
 					resultDate = resultDate.minusDays(resultDate.getDayOfMonth()-formula.getDesignerDay());
 				} else {
-					resultDate = resultDate.minusDays(formula.getDesignerDay()-resultDate.getDayOfMonth());
+					resultDate = resultDate.plusDays(formula.getDesignerDay()-resultDate.getDayOfMonth());
 				}
 			}
 			CalcResult calcResult = new CalcResult(formula.getFormulaId(),formula.getFormulaName(),resultDate,
