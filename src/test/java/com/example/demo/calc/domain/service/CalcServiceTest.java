@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -62,7 +63,9 @@ public class CalcServiceTest {
 		void test(LocalDate calcDate,int valueYear,int valueMonth,int valueDay,
 				int designerDay,LocalDate expect) throws Exception {
 			Formula f = new Formula("99999","test",valueYear,valueMonth,valueDay,designerDay);
-			when(mapper.selectAll()).thenReturn(List.of(f));
+			List<Formula> formulaList = new ArrayList<>();
+			formulaList.add(f);
+			when(mapper.selectAll()).thenReturn(formulaList);
 			List<CalcResult> result = sut.calculation(calcDate);
 			LocalDate actual = result.get(0).getResultDate();
 			assertThat(actual,is(expect));
