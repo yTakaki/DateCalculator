@@ -66,6 +66,7 @@ public class CalcServiceTest {
 			List<Formula> formulaList = new ArrayList<>();
 			formulaList.add(f);
 			when(mapper.selectAll()).thenReturn(formulaList);
+			System.out.println(formulaList);
 			List<CalcResult> result = sut.calculation(calcDate);
 			LocalDate actual = result.get(0).getResultDate();
 			assertThat(actual,is(expect));
