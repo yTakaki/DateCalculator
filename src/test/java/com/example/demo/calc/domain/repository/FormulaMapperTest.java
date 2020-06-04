@@ -42,7 +42,7 @@ public class FormulaMapperTest {
 	@Test
 	void 全件検索ができること() throws Exception {
 		List<Formula> actual = sut.selectAll();
-		assertThat(actual.size(),is(2));
+		assertThat(actual.size(),is(1));
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class FormulaMapperTest {
 	void 登録済みデータを削除できること() throws Exception {
 		sut.delete("00001");
 		List<Formula> actual = sut.selectAll();
-		assertThat(actual.size(),is(1));
+		assertThat(actual.size(),is(0));
 	}
 
 }
