@@ -15,7 +15,7 @@
 			<div class="page-header">
 				<h1>計算式登録画面</h1>
 				<div class="pull-right">
-				<a class="btn btn-primary" th:href="@{/home}">戻る</a>
+				<a id="return_homebtn" class="btn btn-primary" th:href="@{/home}">戻る</a>
 				</div>
 			</div>
 			<form method="post" th:action="@{/regist}" th:object="${registFormulaForm}">
@@ -86,7 +86,7 @@
 						<span th:text="${error.message}">Error message</span>
 					</li>
 				</ul>
-				<button class="btn btn-primary pull-left" type="submit">新規登録</button>
+				<button id="update_btn" class="btn btn-primary pull-left" type="submit">新規登録</button>
 			</form>
 		</div>
 	</div>

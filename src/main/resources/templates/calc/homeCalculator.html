@@ -17,12 +17,12 @@
 	<div>
 	<form method="post" th:action="@{/home}" th:object="${calcDateForm}">
 		<label>計算基準日</label>
-		<input type="text" th:field="*{calcDate}" placeholder="YYYY-MM-DD">
+		<input type="text" id="calcDate" th:field="*{calcDate}" placeholder="YYYY-MM-DD">
 		<p>計算基準日は、"YYYY-MM-DD"の形式で入力してください。</p>
 		<p class="text-danger" th:if="${#fields.hasErrors('calcDate')}"
 		th:errors="*{calcDate}"></p>
-		<button class="btn btn-primary btn-sm pull-left" type="submit">計算実行</button>
-		<a class="btn btn-secondary btn-sm" th:href="@{/regist}">計算式登録</a><br>
+		<button class="btn btn-primary btn-sm pull-left" id="calc_button" type="submit">計算実行</button>
+		<a class="btn btn-secondary btn-sm" id="regist_button" th:href="@{/regist}">計算式登録</a><br>
 
 	</form>
 	</div>
@@ -49,8 +49,10 @@
 					<td>
 						<div class="btn btn-vertical">
 						<form method="post" th:action="@{'/delete/'+${result.formulaId}}">
-							<a class="btn btn-primary btn-sm" th:href="@{'/update/'+${result.formulaId}}">編集</a>
-							<button class="btn btn-danger btn-sm" type="submit">削除</button>
+							<a th:id="${result.formulaId}+'_updatebtn'" class="btn btn-primary btn-sm"
+							th:href="@{'/update/'+${result.formulaId}}">編集</a>
+							<button th:id="${result.formulaId}+'_deletebtn'" class="btn btn-danger btn-sm"
+							type="submit">削除</button>
 						</form>
 						</div>
 					</td>
