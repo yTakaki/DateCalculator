@@ -10,7 +10,7 @@ import com.codeborne.selenide.SelenideElement;
 
 public class HomeCalculatorPage {
 
-	private static final String URL = "http://localhost:8080/";
+	private static final String URL = "http://localhost:8080/home";
 
 	@FindBy(id = "calcDate")
 	private SelenideElement calcDate;
