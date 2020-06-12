@@ -26,7 +26,7 @@ public class HomeCalculatorPage {
 	}
 
 	public String title() {
-		return Selenide.title();
+		return title();
 	}
 
 	public HomeCalculatorPage calcDate(String date) {
@@ -60,6 +60,10 @@ public class HomeCalculatorPage {
 
 	public int countCalcResult() {
 		return $(By.cssSelector(".table")).findElements(By.tagName("td")).size();
+	}
+
+	public SelenideElement body() {
+		return $("body");
 	}
 
 }

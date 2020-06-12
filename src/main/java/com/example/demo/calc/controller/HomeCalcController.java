@@ -39,6 +39,7 @@ public class HomeCalcController {
 		System.out.println(form);
 		List<CalcResult> resultList = calcService.calculation(form.getCalcDate());
 		model.addAttribute("resultList",resultList);
+		model.addAttribute("result",resultList.size()+"件の計算結果を取得しました。");
 		return "calc/homeCalculator";
 	}
 

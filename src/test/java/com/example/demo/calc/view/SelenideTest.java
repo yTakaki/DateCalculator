@@ -1,23 +1,16 @@
 package com.example.demo.calc.view;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Configuration.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@TestPropertySource(locations="classpath:test.properties")
+@Transactional
 public class SelenideTest {
-
-	@BeforeEach
-	void setup() {
-		timeout = 10000;
-	}
 
 	@Test
 	void testGoogle() throws Exception {
@@ -30,6 +23,6 @@ public class SelenideTest {
 	@Test
 	void test1_計算画面に計算基準日の文字が表示されること() throws Exception {
 		open("/home");
-		//$("body").shouldHave(text("計算基準日"));
+		$("body").shouldHave(text("計算基準日"));
 	}
 }
