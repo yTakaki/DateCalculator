@@ -8,8 +8,10 @@ import static com.codeborne.selenide.Selenide.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest
+@TestPropertySource(locations="classpath:test.properties")
 public class SelenideTest {
 
 	@BeforeEach
@@ -26,7 +28,8 @@ public class SelenideTest {
 	}
 
 	@Test
-	void test1() throws Exception {
+	void test1_計算画面に計算基準日の文字が表示されること() throws Exception {
 		open("/home");
+		//$("body").shouldHave(text("計算基準日"));
 	}
 }
