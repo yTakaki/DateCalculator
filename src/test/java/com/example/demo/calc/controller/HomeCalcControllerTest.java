@@ -30,14 +30,14 @@ public class HomeCalcControllerTest {
 
 	@Test
 	void 計算用ページへのリクエストに対して正常にビューが表示されること() throws Exception {
-		mock.perform(get("/home"))
+		mock.perform(get("/"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("calc/homeCalculator"));
 	}
 
 	@Test
 	void 計算用ページにて計算基準日を入力して計算実行を押すとCalcServiceが実行されること() throws Exception {
-		mock.perform(post("/home").param("calcDate","2020/05/05"))
+		mock.perform(get("/home").param("calcDate","2020-05-05"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("calc/homeCalculator"));
 
@@ -55,14 +55,14 @@ public class HomeCalcControllerTest {
 
 	@Test
 	void 計算用ページにて計算基準日がNULLで計算実行されたとき例外情報が画面に返されること() throws Exception {
-		mock.perform(post("/home"))
+		mock.perform(get("/home"))
 		.andExpect(model().hasErrors())
 		.andExpect(view().name("calc/homeCalculator"));
 	}
 
 	@Test
 	void 計算用ページにて計算基準日が不適正な値で計算実行されたとき例外情報が画面に返されること() throws Exception {
-		mock.perform(post("/home").param("calcDate", "2020/5/5"))
+		mock.perform(get("/home").param("calcDate", "2020/5/5"))
 		.andExpect(model().hasErrors())
 		.andExpect(view().name("calc/homeCalculator"));
 	}

@@ -26,12 +26,12 @@ public class HomeCalcController {
 	@Autowired
 	private FormulaService formulaService;
 
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String getHomeCalculator(@ModelAttribute CalcDateForm form,Model model) {
 		return "calc/homeCalculator";
 	}
 
-	@PostMapping("/home")
+	@GetMapping("/home")
 	public String postHomeCalculator(@ModelAttribute @Validated CalcDateForm form,BindingResult bind,Model model) {
 		if (bind.hasErrors()) {
 			return "calc/homeCalculator";

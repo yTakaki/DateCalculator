@@ -15,7 +15,7 @@
 		<h1>業務日付計算</h1>
 	</div>
 	<div>
-	<form method="post" th:action="@{/home}" th:object="${calcDateForm}">
+	<form th:action="@{/home}" th:object="${calcDateForm}">
 		<label>計算基準日</label>
 		<input type="text" id="calcDate" th:field="*{calcDate}" placeholder="YYYY-MM-DD">
 		<p>計算基準日は、"YYYY-MM-DD"の形式で入力してください。</p>
